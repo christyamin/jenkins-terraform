@@ -20,6 +20,7 @@ pipeline {
             steps {
                 script {
                     echo "building the docker image..."
+                    sh "groups"
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]){
                         sh "docker build -t $IMAGE_NAME ."
                         sh "echo $PASS | docker login -u $USER --password-stdin"
