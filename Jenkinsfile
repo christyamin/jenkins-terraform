@@ -20,11 +20,10 @@ pipeline {
             steps {
                 script {
                     echo "building the docker image..."
-                    sh "sudo usermod -aG docker jenkins"
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]){
-                        sh "docker build -t $IMAGE_NAME ."
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push $IMAGE_NAME"
+                        sh "sudo docker build -t $IMAGE_NAME ."
+                        sh "echo $PASS | sudo docker login -u $USER --password-stdin"
+                        sh "sudo docker push $IMAGE_NAME"
                     }
                 }
             }
